@@ -9,32 +9,48 @@
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
+            /* Light Mode (Default) */
             --yellow: #FFCC00;
             --yellow-dark: #E6B800;
             --yellow-light: #FFD633;
-            --navy: #1E1E1E;
-            --navy-light: #2C2C2C;
-            --gray: #4A4A4A;
-            --white: #FFFFFF;
-            --off-white: #F8F9FA;
-            --black: #000000;
-            --gradient-primary: linear-gradient(135deg, var(--yellow) 0%, var(--yellow-dark) 100%);
-            --gradient-dark: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F8F9FA;
+            --bg-card: #FFFFFF;
+            --text-primary: #1E1E1E;
+            --text-secondary: #6B7280;
+            --border-color: #E5E7EB;
             --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
             --shadow-md: 0 4px 16px rgba(0,0,0,0.12);
             --shadow-lg: 0 8px 32px rgba(0,0,0,0.16);
+        }
+
+        [data-theme="dark"] {
+            /* Dark Mode - wie im Screenshot */
+            --yellow: #FFCC00;
+            --yellow-dark: #E6B800;
+            --yellow-light: #FFD633;
+            --bg-primary: #0A0E1A;
+            --bg-secondary: #1A1F2E;
+            --bg-card: #1E2433;
+            --text-primary: #FFFFFF;
+            --text-secondary: #9CA3AF;
+            --border-color: #374151;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.4);
+            --shadow-lg: 0 8px 32px rgba(0,0,0,0.5);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            color: var(--navy);
-            background: var(--white);
+            color: var(--text-primary);
+            background: var(--bg-primary);
             line-height: 1.6;
             overflow-x: hidden;
         }
@@ -43,6 +59,7 @@
             font-family: 'Raleway', sans-serif;
             font-weight: 700;
             line-height: 1.2;
+            color: var(--text-primary);
         }
 
         /* Navigation */
@@ -50,11 +67,11 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(255, 255, 255, 0.95);
+            background: var(--bg-card);
             backdrop-filter: blur(10px);
             box-shadow: var(--shadow-sm);
             z-index: 1000;
-            transition: all 0.3s ease;
+            border-bottom: 1px solid var(--border-color);
         }
 
         nav.scrolled {
@@ -74,12 +91,35 @@
             font-family: 'Raleway', sans-serif;
             font-size: 1.8rem;
             font-weight: 800;
-            color: var(--navy);
+            color: var(--text-primary);
             letter-spacing: -0.5px;
         }
 
         .logo span {
             color: var(--yellow);
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            position: absolute;
+            left: 2rem;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background: var(--yellow);
+            border-color: var(--yellow);
+            transform: rotate(180deg);
         }
 
         .nav-links {
@@ -89,7 +129,7 @@
         }
 
         .nav-links a {
-            color: var(--navy);
+            color: var(--text-primary);
             text-decoration: none;
             font-weight: 500;
             transition: color 0.3s ease;
@@ -112,14 +152,14 @@
         }
 
         .nav-links a:hover {
-            color: var(--yellow-dark);
+            color: var(--yellow);
         }
 
         /* Hero Section */
         .hero {
             margin-top: 80px;
             min-height: 600px;
-            background: var(--gradient-primary);
+            background: linear-gradient(135deg, var(--yellow) 0%, var(--yellow-dark) 100%);
             position: relative;
             overflow: hidden;
             display: flex;
@@ -152,7 +192,7 @@
 
         .hero h1 {
             font-size: 4rem;
-            color: var(--navy);
+            color: #1E1E1E;
             margin-bottom: 1rem;
             animation: fadeInUp 0.8s ease-out;
             font-weight: 800;
@@ -160,7 +200,7 @@
 
         .hero-subtitle {
             font-size: 1.5rem;
-            color: var(--gray);
+            color: #2C2C2C;
             margin-bottom: 2.5rem;
             animation: fadeInUp 0.8s ease-out 0.2s both;
         }
@@ -185,7 +225,7 @@
         .btn {
             padding: 1rem 2.5rem;
             font-size: 1.1rem;
-            font-weight: 600;
+            font-weight: 700;
             border: none;
             border-radius: 8px;
             cursor: pointer;
@@ -195,26 +235,27 @@
         }
 
         .btn-primary {
-            background: var(--navy);
+            background: #1E1E1E;
             color: var(--yellow);
-            font-weight: 700;
+            border: 2px solid transparent;
         }
 
         .btn-primary:hover {
-            background: var(--black);
+            background: #000000;
             transform: translateY(-2px);
             box-shadow: var(--shadow-lg);
+            border-color: var(--yellow);
         }
 
         .btn-secondary {
             background: transparent;
-            color: var(--navy);
-            border: 2px solid var(--navy);
+            color: #1E1E1E;
+            border: 2px solid #1E1E1E;
             font-weight: 700;
         }
 
         .btn-secondary:hover {
-            background: var(--navy);
+            background: #1E1E1E;
             color: var(--yellow);
         }
 
@@ -229,7 +270,7 @@
             font-size: 2.5rem;
             text-align: center;
             margin-bottom: 3rem;
-            color: var(--navy);
+            color: var(--text-primary);
         }
 
         /* Features Grid */
@@ -241,23 +282,24 @@
         }
 
         .feature-card {
-            background: var(--white);
+            background: var(--bg-card);
             padding: 2.5rem 2rem;
             border-radius: 12px;
             box-shadow: var(--shadow-sm);
             transition: all 0.3s ease;
-            border-top: 4px solid var(--yellow);
+            border: 2px solid var(--yellow);
         }
 
         .feature-card:hover {
             transform: translateY(-8px);
             box-shadow: var(--shadow-lg);
+            border-color: var(--yellow-light);
         }
 
         .feature-icon {
             width: 60px;
             height: 60px;
-            background: var(--gradient-primary);
+            background: linear-gradient(135deg, var(--yellow) 0%, var(--yellow-dark) 100%);
             border-radius: 12px;
             display: flex;
             align-items: center;
@@ -269,11 +311,11 @@
         .feature-card h3 {
             font-size: 1.4rem;
             margin-bottom: 1rem;
-            color: var(--navy);
+            color: var(--text-primary);
         }
 
         .feature-card p {
-            color: #6B7280;
+            color: var(--text-secondary);
             line-height: 1.7;
         }
 
@@ -283,77 +325,102 @@
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
             margin-top: 3rem;
+            align-items: flex-start;
         }
 
         .membership-card {
-            background: var(--white);
+            background: var(--bg-card);
             border-radius: 16px;
-            overflow: hidden;
+            overflow: visible;
             box-shadow: var(--shadow-md);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            border: 2px solid var(--yellow);
         }
 
         .membership-card:hover {
             transform: translateY(-12px);
-            box-shadow: var(--shadow-lg);
+            box-shadow: 0 12px 48px rgba(255, 204, 0, 0.3);
+            border-color: var(--yellow-light);
+        }
+
+        /* Standard Card - Hervorgehoben */
+        .membership-card.standard {
+            transform: scale(1.05);
+            box-shadow: 0 8px 40px rgba(255, 204, 0, 0.4);
+            border: 3px solid var(--yellow);
+        }
+
+        .membership-card.standard:hover {
+            transform: scale(1.05) translateY(-12px);
+        }
+
+        .membership-badge {
+            position: absolute;
+            top: 20px;
+            right: -8px;
+            background: var(--yellow);
+            color: #1E1E1E;
+            padding: 8px 16px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            transform: rotate(0deg);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            z-index: 10;
+            letter-spacing: 1px;
+            border-radius: 4px 0 0 4px;
         }
 
         .membership-header {
             padding: 2rem;
-            color: var(--white);
+            color: var(--text-primary);
             position: relative;
-        }
-
-        .membership-card.basic .membership-header {
-            background: linear-gradient(135deg, #FFD633 0%, #FFCC00 100%);
-            color: var(--navy);
-        }
-
-        .membership-card.standard .membership-header {
-            background: linear-gradient(135deg, #FFCC00 0%, #E6B800 100%);
-            color: var(--navy);
-        }
-
-        .membership-card.pro .membership-header {
-            background: linear-gradient(135deg, #E6B800 0%, #CC9900 100%);
-            color: var(--white);
-        }
-
-        .membership-card.master .membership-header {
-            background: linear-gradient(135deg, #1E1E1E 0%, #000000 100%);
-            color: var(--yellow);
+            background: transparent;
         }
 
         .membership-card h3 {
             font-size: 1.8rem;
             margin-bottom: 0.5rem;
+            color: var(--yellow);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 1px;
         }
 
         .membership-slogan {
             font-size: 0.95rem;
             opacity: 0.9;
             font-style: italic;
+            color: var(--text-secondary);
         }
 
         .membership-price {
             font-size: 2.5rem;
             font-weight: 800;
             margin: 1rem 0;
+            color: var(--text-primary);
         }
 
         .membership-price span {
             font-size: 1rem;
             font-weight: 400;
+            color: var(--text-secondary);
         }
 
         .membership-body {
             padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
         }
 
         .membership-features {
             list-style: none;
-            margin-bottom: 2rem;
+            margin-bottom: auto;
+            flex-grow: 1;
         }
 
         .membership-features li {
@@ -361,11 +428,12 @@
             display: flex;
             align-items: flex-start;
             gap: 0.8rem;
+            color: var(--text-secondary);
         }
 
         .membership-features li::before {
             content: '✓';
-            color: var(--yellow-dark);
+            color: var(--yellow);
             font-weight: bold;
             font-size: 1.2rem;
             flex-shrink: 0;
@@ -375,10 +443,11 @@
         .form-container {
             max-width: 700px;
             margin: 0 auto;
-            background: var(--white);
+            background: var(--bg-card);
             padding: 3rem;
             border-radius: 16px;
             box-shadow: var(--shadow-md);
+            border: 2px solid var(--border-color);
         }
 
         .form-group {
@@ -389,7 +458,7 @@
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 600;
-            color: var(--navy);
+            color: var(--text-primary);
         }
 
         .form-group input,
@@ -397,11 +466,13 @@
         .form-group textarea {
             width: 100%;
             padding: 1rem;
-            border: 2px solid #E5E7EB;
+            border: 2px solid var(--border-color);
             border-radius: 8px;
             font-size: 1rem;
             font-family: 'Inter', sans-serif;
             transition: border-color 0.3s ease;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
         }
 
         .form-group input:focus,
@@ -422,20 +493,21 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: var(--gradient-primary);
+            background: linear-gradient(135deg, var(--yellow) 0%, var(--yellow-dark) 100%);
         }
 
         .admin-dashboard {
-            background: var(--off-white);
+            background: var(--bg-secondary);
             min-height: 100vh;
             padding-top: 80px;
         }
 
         .dashboard-header {
-            background: var(--white);
+            background: var(--bg-card);
             padding: 2rem;
             margin-bottom: 2rem;
             box-shadow: var(--shadow-sm);
+            border-bottom: 2px solid var(--border-color);
         }
 
         .dashboard-stats {
@@ -446,24 +518,26 @@
         }
 
         .stat-card {
-            background: var(--white);
+            background: var(--bg-card);
             padding: 2rem;
             border-radius: 12px;
             box-shadow: var(--shadow-sm);
+            border: 2px solid var(--yellow);
         }
 
         .stat-number {
             font-size: 2.5rem;
             font-weight: 800;
-            color: var(--yellow-dark);
+            color: var(--yellow);
             margin-bottom: 0.5rem;
         }
 
         .data-table {
-            background: var(--white);
+            background: var(--bg-card);
             border-radius: 12px;
             overflow: hidden;
             box-shadow: var(--shadow-sm);
+            border: 2px solid var(--border-color);
         }
 
         table {
@@ -472,20 +546,22 @@
         }
 
         th {
-            background: var(--navy);
-            color: var(--white);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
             padding: 1.2rem;
             text-align: left;
             font-weight: 600;
+            border-bottom: 2px solid var(--yellow);
         }
 
         td {
             padding: 1.2rem;
-            border-bottom: 1px solid #E5E7EB;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-primary);
         }
 
         tr:hover {
-            background: var(--off-white);
+            background: var(--bg-secondary);
         }
 
         .status-badge {
@@ -537,7 +613,7 @@
             border: none;
             font-size: 1.5rem;
             cursor: pointer;
-            color: var(--navy);
+            color: var(--text-primary);
         }
 
         .success-message {
@@ -552,6 +628,89 @@
 
         .hidden {
             display: none;
+        }
+
+        /* Employee/Contact Section */
+        .employee-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .employee-card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+            border: 2px solid var(--yellow);
+        }
+
+        .employee-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--yellow-light);
+        }
+
+        .employee-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .employee-rank {
+            display: inline-block;
+            padding: 0.4rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            background: var(--yellow);
+            color: #1E1E1E;
+        }
+
+        .employee-phone {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .employee-phone::before {
+            content: '📞';
+            font-size: 1.2rem;
+        }
+
+        .employee-form {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border: 2px solid var(--border-color);
+        }
+
+        .employee-form h3 {
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .employee-table {
+            margin-top: 2rem;
+        }
+
+        .employee-actions {
+            display: flex;
+            gap: 0.5rem;
         }
 
         /* Responsive */
@@ -608,6 +767,9 @@
     <!-- Navigation -->
     <nav id="navbar">
         <div class="nav-container">
+            <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle" title="Dark/Light Mode">
+                🌙
+            </button>
             <div class="logo">GLAC<span>.</span></div>
             <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
             <ul class="nav-links" id="navLinks">
@@ -615,6 +777,7 @@
                 <li><a href="#memberships" onclick="showPage('memberships')">Mitgliedschaften</a></li>
                 <li><a href="#apply" onclick="showPage('apply')">Mitglied werden</a></li>
                 <li><a href="#booking" onclick="showPage('booking')">Terminbuchung</a></li>
+                <li><a href="#contact" onclick="showPage('contact')">Kontakt & Mitarbeiter</a></li>
                 <li><a href="#admin" onclick="showPage('admin-login')">Admin</a></li>
             </ul>
         </div>
@@ -689,12 +852,13 @@
                             <li>Wartungserinnerung</li>
                             <li>Abschleppen zum Werkstattpreis (-50%)</li>
                         </ul>
-                        <a href="#apply" onclick="showPage('apply')" class="btn btn-primary" style="width: 100%; text-align: center;">Jetzt beantragen</a>
+                        <a href="#apply" onclick="showPage('apply')" class="btn btn-primary" style="width: 100%; text-align: center; margin-top: 1.5rem;">Jetzt beantragen</a>
                     </div>
                 </div>
 
                 <!-- Standard GLAC -->
                 <div class="membership-card standard">
+                    <div class="membership-badge">BELIEBT</div>
                     <div class="membership-header">
                         <h3>Standard GLAC</h3>
                         <p class="membership-slogan">Der meistgebuchte Service-Tarif</p>
@@ -707,7 +871,7 @@
                             <li>Innenraum-Check & Flüssigkeiten-Prüfung gratis</li>
                             <li>Express-Terminvergabe</li>
                         </ul>
-                        <a href="#apply" onclick="showPage('apply')" class="btn btn-primary" style="width: 100%; text-align: center;">Jetzt beantragen</a>
+                        <a href="#apply" onclick="showPage('apply')" class="btn btn-primary" style="width: 100%; text-align: center; margin-top: 1.5rem;">Jetzt beantragen</a>
                     </div>
                 </div>
 
@@ -727,7 +891,7 @@
                             <li>Erweiterte Garantie</li>
                             <li>VIP-Bereich</li>
                         </ul>
-                        <a href="#apply" onclick="showPage('apply')" class="btn btn-primary" style="width: 100%; text-align: center;">Jetzt beantragen</a>
+                        <a href="#apply" onclick="showPage('apply')" class="btn btn-primary" style="width: 100%; text-align: center; margin-top: 1.5rem;">Jetzt beantragen</a>
                     </div>
                 </div>
 
@@ -749,7 +913,7 @@
                             <li>Innen- & Außenreinigung monatlich</li>
                             <li>VIP-Bereich</li>
                         </ul>
-                        <a href="#apply" onclick="showPage('apply')" class="btn btn-primary" style="width: 100%; text-align: center;">Jetzt beantragen</a>
+                        <a href="#apply" onclick="showPage('apply')" class="btn btn-primary" style="width: 100%; text-align: center; margin-top: 1.5rem;">Jetzt beantragen</a>
                     </div>
                 </div>
             </div>
@@ -845,6 +1009,23 @@
         </div>
     </div>
 
+    <!-- Contact & Employees Page -->
+    <div id="contact" class="page hidden">
+        <div class="container" style="margin-top: 100px;">
+            <h2 class="section-title">GLAC – Ansprechpartner & Kontakt</h2>
+            <p style="text-align: center; font-size: 1.2rem; color: #6B7280; margin-bottom: 3rem;">
+                Unser Team steht dir jederzeit zur Verfügung. Kontaktiere uns ingame!
+            </p>
+            
+            <div id="employeeList" class="employee-grid">
+                <div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: #6B7280;">
+                    <p style="font-size: 1.1rem;">Momentan sind keine Mitarbeiter eingetragen.</p>
+                    <p style="margin-top: 1rem;">Schau später noch einmal vorbei!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Admin Login Page -->
     <div id="admin-login" class="page hidden">
         <div class="admin-login">
@@ -927,6 +1108,54 @@
                         </tbody>
                     </table>
                 </div>
+
+                <h3 style="margin: 3rem 0 1.5rem;">Mitarbeiter verwalten</h3>
+                
+                <div class="employee-form">
+                    <h3>Neuen Mitarbeiter hinzufügen</h3>
+                    <form id="employeeForm" onsubmit="handleEmployeeSubmit(event)">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="empName">Name *</label>
+                                <input type="text" id="empName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="empPhone">Telefonnummer *</label>
+                                <input type="tel" id="empPhone" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="empRank">Rang *</label>
+                                <select id="empRank" required>
+                                    <option value="">Bitte wählen</option>
+                                    <option value="GLAC-Leitung">GLAC-Leitung</option>
+                                    <option value="Werkstattleiter">Werkstattleiter</option>
+                                    <option value="Mechaniker">Mechaniker</option>
+                                    <option value="Azubi">Azubi</option>
+                                    <option value="Sonstiges">Sonstiges</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Mitarbeiter hinzufügen</button>
+                    </form>
+                </div>
+
+                <div class="data-table employee-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Rang</th>
+                                <th>Telefon</th>
+                                <th>Aktionen</th>
+                            </tr>
+                        </thead>
+                        <tbody id="employeesTable">
+                            <tr>
+                                <td colspan="4" style="text-align: center; padding: 2rem; color: #6B7280;">Keine Mitarbeiter vorhanden</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -950,7 +1179,12 @@
             // Bin ID für Mitgliedschaftsanträge
             // Erstelle ein weiteres Bin auf: https://jsonbin.io/bins
             // Initialer Inhalt: {"applications": []}
-            applicationsBinId: '6949dc6ad0ea881f403a9c39'
+            applicationsBinId: '6949dc6ad0ea881f403a9c39',
+            
+            // Bin ID für Mitarbeiter
+            // Erstelle ein weiteres Bin auf: https://jsonbin.io/bins
+            // Initialer Inhalt: {"employees": []}
+            employeesBinId: '6949e352ae596e708fab4996'
         };
         
         // ============================================
@@ -958,12 +1192,13 @@
         // ============================================
         
         // Configuration
-        const ADMIN_PASSWORD = 'glac2024admin'; // Ändern Sie dieses Passwort!
+        const ADMIN_PASSWORD = 'glac2025admin'; // Ändern Sie dieses Passwort!
         const USE_JSONBIN = JSONBIN_CONFIG.apiKey !== 'DEIN_API_KEY_HIER_EINTRAGEN';
 
         // Data Storage
         let bookings = [];
         let applications = [];
+        let employees = [];
         let isAdminLoggedIn = sessionStorage.getItem('glac_admin_logged_in') === 'true';
 
         // JSONBin.io Helper Functions
@@ -1021,13 +1256,16 @@
                 // Lade Daten von JSONBin
                 const bookingsData = await loadFromJSONBin(JSONBIN_CONFIG.bookingsBinId);
                 const applicationsData = await loadFromJSONBin(JSONBIN_CONFIG.applicationsBinId);
+                const employeesData = await loadFromJSONBin(JSONBIN_CONFIG.employeesBinId);
                 
                 bookings = bookingsData?.bookings || [];
                 applications = applicationsData?.applications || [];
+                employees = employeesData?.employees || [];
             } else {
                 // Fallback zu localStorage
                 bookings = JSON.parse(localStorage.getItem('glac_bookings') || '[]');
                 applications = JSON.parse(localStorage.getItem('glac_applications') || '[]');
+                employees = JSON.parse(localStorage.getItem('glac_employees') || '[]');
             }
         }
 
@@ -1048,6 +1286,14 @@
             }
         }
 
+        async function saveEmployees() {
+            if (USE_JSONBIN) {
+                await saveToJSONBin(JSONBIN_CONFIG.employeesBinId, { employees });
+            } else {
+                localStorage.setItem('glac_employees', JSON.stringify(employees));
+            }
+        }
+
         // Page Navigation
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(page => page.classList.add('hidden'));
@@ -1061,6 +1307,11 @@
                 updateAdminDashboard();
             }
             
+            // Update employee list if contact page shown
+            if (pageId === 'contact') {
+                displayEmployees();
+            }
+            
             // Scroll to top
             window.scrollTo(0, 0);
         }
@@ -1068,6 +1319,29 @@
         // Mobile Menu Toggle
         function toggleMobileMenu() {
             document.getElementById('navLinks').classList.toggle('active');
+        }
+
+        // Theme Toggle
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            const themeToggle = document.getElementById('themeToggle');
+            
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('glac_theme', newTheme);
+            
+            // Icon wechseln
+            themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+        }
+
+        // Theme beim Laden setzen
+        function initTheme() {
+            const savedTheme = localStorage.getItem('glac_theme') || 'dark';
+            const themeToggle = document.getElementById('themeToggle');
+            
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
         }
 
         // Navbar Scroll Effect
@@ -1214,6 +1488,9 @@
                     </tr>
                 `).join('');
             }
+            
+            // Update employees table
+            updateEmployeesTable();
         }
 
         // Complete Booking
@@ -1248,10 +1525,148 @@
             }
         }
 
+        // ============================================
+        // MITARBEITER-VERWALTUNG
+        // ============================================
+
+        // Display Employees on Contact Page
+        async function displayEmployees() {
+            await initializeData();
+            
+            const employeeList = document.getElementById('employeeList');
+            
+            if (employees.length === 0) {
+                employeeList.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: #6B7280;">
+                        <p style="font-size: 1.1rem;">Momentan sind keine Mitarbeiter eingetragen.</p>
+                        <p style="margin-top: 1rem;">Schau später noch einmal vorbei!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Sortiere nach Rang-Priorität
+            const rankPriority = {
+                'GLAC-Leitung': 1,
+                'Werkstattleiter': 2,
+                'Mechaniker': 3,
+                'Azubi': 4,
+                'Sonstiges': 5
+            };
+
+            const sortedEmployees = [...employees].sort((a, b) => {
+                const priorityA = rankPriority[a.rank] || 999;
+                const priorityB = rankPriority[b.rank] || 999;
+                return priorityA - priorityB;
+            });
+
+            employeeList.innerHTML = sortedEmployees.map(emp => {
+                return `
+                    <div class="employee-card">
+                        <div class="employee-name">${emp.name}</div>
+                        <div class="employee-rank">${emp.rank}</div>
+                        <div class="employee-phone">${emp.phone}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Handle Employee Form Submit
+        async function handleEmployeeSubmit(event) {
+            event.preventDefault();
+            
+            const employee = {
+                id: Date.now(),
+                name: document.getElementById('empName').value,
+                phone: document.getElementById('empPhone').value,
+                rank: document.getElementById('empRank').value,
+                timestamp: new Date().toLocaleString('de-DE')
+            };
+            
+            employees.push(employee);
+            await saveEmployees();
+            
+            document.getElementById('employeeForm').reset();
+            updateAdminDashboard();
+        }
+
+        // Edit Employee
+        async function editEmployee(id) {
+            const employee = employees.find(e => e.id === id);
+            if (!employee) return;
+
+            const newName = prompt('Name:', employee.name);
+            if (newName === null) return;
+
+            const newPhone = prompt('Telefonnummer:', employee.phone);
+            if (newPhone === null) return;
+
+            const newRank = prompt('Rang (GLAC-Leitung, Werkstattleiter, Mechaniker, Azubi, Sonstiges):', employee.rank);
+            if (newRank === null) return;
+
+            employees = employees.map(e => e.id === id ? {
+                ...e,
+                name: newName || e.name,
+                phone: newPhone || e.phone,
+                rank: newRank || e.rank
+            } : e);
+
+            await saveEmployees();
+            updateAdminDashboard();
+        }
+
+        // Delete Employee
+        async function deleteEmployee(id) {
+            if (confirm('Möchtest du diesen Mitarbeiter wirklich löschen?')) {
+                employees = employees.filter(e => e.id !== id);
+                await saveEmployees();
+                updateAdminDashboard();
+            }
+        }
+
+        // Update Employees Table in Admin Dashboard
+        function updateEmployeesTable() {
+            const employeesTable = document.getElementById('employeesTable');
+            
+            if (employees.length === 0) {
+                employeesTable.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 2rem; color: #6B7280;">Keine Mitarbeiter vorhanden</td></tr>';
+                return;
+            }
+
+            // Sortiere nach Rang
+            const rankPriority = {
+                'GLAC-Leitung': 1,
+                'Werkstattleiter': 2,
+                'Mechaniker': 3,
+                'Azubi': 4,
+                'Sonstiges': 5
+            };
+
+            const sortedEmployees = [...employees].sort((a, b) => {
+                const priorityA = rankPriority[a.rank] || 999;
+                const priorityB = rankPriority[b.rank] || 999;
+                return priorityA - priorityB;
+            });
+
+            employeesTable.innerHTML = sortedEmployees.map(emp => `
+                <tr>
+                    <td>${emp.name}</td>
+                    <td><span class="status-badge" style="background: #E0E7FF; color: #3730A3;">${emp.rank}</span></td>
+                    <td>${emp.phone}</td>
+                    <td class="employee-actions">
+                        <button class="action-btn btn-complete" onclick="editEmployee(${emp.id})">Bearbeiten</button>
+                        <button class="action-btn btn-delete" onclick="deleteEmployee(${emp.id})">Löschen</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
         // Initialize
         document.addEventListener('DOMContentLoaded', async () => {
+            initTheme(); // Theme laden
             await initializeData();
             showPage('home');
+            displayEmployees(); // Initial employee load
         });
     </script>
 </body>
