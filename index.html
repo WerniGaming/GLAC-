@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GLAC - GermanLife Automobile Club</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --yellow: #FFCC00;
+            --yellow-dark: #E6B800;
+            --yellow-light: #FFD633;
+            --navy: #1E1E1E;
+            --navy-light: #2C2C2C;
+            --gray: #4A4A4A;
+            --white: #FFFFFF;
+            --off-white: #F8F9FA;
+            --black: #000000;
+            --gradient-primary: linear-gradient(135deg, var(--yellow) 0%, var(--yellow-dark) 100%);
+            --gradient-dark: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.12);
+            --shadow-lg: 0 8px 32px rgba(0,0,0,0.16);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--navy);
+            background: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Raleway', sans-serif;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-sm);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            box-shadow: var(--shadow-md);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-family: 'Raleway', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--navy);
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: var(--yellow);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--navy);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--yellow);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--yellow-dark);
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            min-height: 600px;
+            background: var(--gradient-primary);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(0, 0, 0, 0.1) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            color: var(--navy);
+            margin-bottom: 1rem;
+            animation: fadeInUp 0.8s ease-out;
+            font-weight: 800;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--gray);
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--navy);
+            color: var(--yellow);
+            font-weight: 700;
+        }
+
+        .btn-primary:hover {
+            background: var(--black);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--navy);
+            border: 2px solid var(--navy);
+            font-weight: 700;
+        }
+
+        .btn-secondary:hover {
+            background: var(--navy);
+            color: var(--yellow);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--navy);
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 2.5rem 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+            border-top: 4px solid var(--yellow);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--navy);
+        }
+
+        .feature-card p {
+            color: #6B7280;
+            line-height: 1.7;
+        }
+
+        /* Membership Cards */
+        .membership-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .membership-card {
+            background: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .membership-card:hover {
+            transform: translateY(-12px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .membership-header {
+            padding: 2rem;
+            color: var(--white);
+            position: relative;
+        }
+
+        .membership-card.basic .membership-header {
+            background: linear-gradient(135deg, #FFD633 0%, #FFCC00 100%);
+            color: var(--navy);
+        }
+
+        .membership-card.standard .membership-header {
+            background: linear-gradient(135deg, #FFCC00 0%, #E6B800 100%);
+            color: var(--navy);
+        }
+
+        .membership-card.pro .membership-header {
+            background: linear-gradient(135deg, #E6B800 0%, #CC9900 100%);
+            color: var(--white);
+        }
+
+        .membership-card.master .membership-header {
+            background: linear-gradient(135deg, #1E1E1E 0%, #000000 100%);
+            color: var(--yellow);
+        }
+
+        .membership-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .membership-slogan {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        .membership-price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 1rem 0;
+        }
+
+        .membership-price span {
+            font-size: 1rem;
+            font-weight: 400;
+        }
+
+        .membership-body {
+            padding: 2rem;
+        }
+
+        .membership-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .membership-features li {
+            padding: 0.8rem 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+        }
+
+        .membership-features li::before {
+            content: '✓';
+            color: var(--yellow-dark);
+            font-weight: bold;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        /* Forms */
+        .form-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .form-group {
+            margin-bottom: 1.8rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #E5E7EB;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--yellow);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* Admin Panel */
+        .admin-login {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gradient-primary);
+        }
+
+        .admin-dashboard {
+            background: var(--off-white);
+            min-height: 100vh;
+            padding-top: 80px;
+        }
+
+        .dashboard-header {
+            background: var(--white);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--yellow-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .data-table {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: var(--navy);
+            color: var(--white);
+            padding: 1.2rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 1.2rem;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        tr:hover {
+            background: var(--off-white);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-open {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        .status-done {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        .action-btn {
+            padding: 0.5rem 1rem;
+            margin-right: 0.5rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn-complete {
+            background: #10B981;
+            color: white;
+        }
+
+        .btn-delete {
+            background: #EF4444;
+            color: white;
+        }
+
+        .action-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--navy);
+        }
+
+        .success-message {
+            background: #D1FAE5;
+            color: #065F46;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1.5rem;
+                transition: left 0.3s ease;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .membership-grid {
+                grid-template-columns: 1fr;
+            }
+
+            table {
+                font-size: 0.85rem;
+            }
+
+            th, td {
+                padding: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">GLAC<span>.</span></div>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" onclick="showPage('home')">Startseite</a></li>
+                <li><a href="#memberships" onclick="showPage('memberships')">Mitgliedschaften</a></li>
+                <li><a href="#apply" onclick="showPage('apply')">Mitglied werden</a></li>
+                <li><a href="#booking" onclick="showPage('booking')">Terminbuchung</a></li>
+                <li><a href="#admin" onclick="showPage('admin-login')">Admin</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <div id="home" class="page">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>GLAC – Dein Automobilclub auf GermanLife</h1>
+                <p class="hero-subtitle">Service, Reparatur & Pannenhilfe – direkt ingame</p>
+                <div class="hero-buttons">
+                    <a href="#apply" onclick="showPage('apply')" class="btn btn-primary">Jetzt Mitglied werden</a>
+                    <a href="#memberships" onclick="showPage('memberships')" class="btn btn-secondary">Leistungen ansehen</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <div class="container">
+            <h2 class="section-title">Warum GLAC?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🚗</div>
+                    <h3>Schnelle Hilfe & Abschleppdienst</h3>
+                    <p>Egal wo, egal wann – unser Team ist für dich da. Professioneller Abschleppdienst mit Priorität für Mitglieder.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <h3>Werkstatt & Reparaturservice</h3>
+                    <p>Hochwertige Reparaturen, regelmäßige Wartung und professionelle Checks für dein Fahrzeug.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⭐</div>
+                    <h3>VIP-Service für Mitglieder</h3>
+                    <p>Exklusive Rabatte, bevorzugte Terminvergabe und persönliche Betreuung für unsere Premium-Mitglieder.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📅</div>
+                    <h3>Ingame-Termine & Priorität</h3>
+                    <p>Buche deinen Termin online und profitiere von Express-Service ohne lange Wartezeiten.</p>
+                </div>
+            </div>
+
+            <!-- CTA Section -->
+            <div style="text-align: center; margin-top: 3rem;">
+                <h2 style="margin-bottom: 1.5rem;">Bereit für professionellen Automobilservice?</h2>
+                <a href="#memberships" onclick="showPage('memberships')" class="btn btn-primary" style="font-size: 1.2rem; padding: 1.2rem 3rem;">Mitgliedschaften vergleichen</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Memberships Page -->
+    <div id="memberships" class="page hidden">
+        <div class="container" style="margin-top: 100px;">
+            <h2 class="section-title">Unsere Mitgliedschaften</h2>
+            <p style="text-align: center; font-size: 1.2rem; color: #6B7280; margin-bottom: 3rem;">Wähle das passende Paket für deine Bedürfnisse</p>
+            
+            <div class="membership-grid">
+                <!-- Basic GLAC -->
+                <div class="membership-card basic">
+                    <div class="membership-header">
+                        <h3>Basic GLAC</h3>
+                        <p class="membership-slogan">Für Gelegenheitsfahrer – klein, aber fair</p>
+                        <div class="membership-price">400€ <span>/ Woche</span></div>
+                    </div>
+                    <div class="membership-body">
+                        <ul class="membership-features">
+                            <li>5% Rabatt auf Service-Stufen 1–4</li>
+                            <li>1× monatlich kostenloser Check-Up (Stufe 1)</li>
+                            <li>Wartungserinnerung</li>
+                            <li>Abschleppen zum Werkstattpreis (-50%)</li>
+                        </ul>
+                        <a href="#apply" onclick="showPage('apply')" class="btn btn-primary" style="width: 100%; text-align: center;">Jetzt beantragen</a>
+                    </div>
+                </div>
+
+                <!-- Standard GLAC -->
+                <div class="membership-card standard">
+                    <div class="membership-header">
+                        <h3>Standard GLAC</h3>
+                        <p class="membership-slogan">Der meistgebuchte Service-Tarif</p>
+                        <div class="membership-price">600€ <span>/ Woche</span></div>
+                    </div>
+                    <div class="membership-body">
+                        <ul class="membership-features">
+                            <li>10% Rabatt auf Reparaturen & Wartung</li>
+                            <li>1× Abschleppen pro Monat kostenlos</li>
+                            <li>Innenraum-Check & Flüssigkeiten-Prüfung gratis</li>
+                            <li>Express-Terminvergabe</li>
+                        </ul>
+                        <a href="#apply" onclick="showPage('apply')" class="btn btn-primary" style="width: 100%; text-align: center;">Jetzt beantragen</a>
+                    </div>
+                </div>
+
+                <!-- Pro GLAC -->
+                <div class="membership-card pro">
+                    <div class="membership-header">
+                        <h3>Pro GLAC</h3>
+                        <p class="membership-slogan">Mehr Service, weniger Sorgen</p>
+                        <div class="membership-price">2000€ <span>/ Woche</span></div>
+                    </div>
+                    <div class="membership-body">
+                        <ul class="membership-features">
+                            <li>20% Rabatt auf Service-Stufen & Teiletausch</li>
+                            <li>2× Abschleppen pro Monat kostenlos</li>
+                            <li>1× monatlich Service-Stufe 2 kostenlos</li>
+                            <li>Direktannahme ohne Wartezeit</li>
+                            <li>Erweiterte Garantie</li>
+                            <li>VIP-Bereich</li>
+                        </ul>
+                        <a href="#apply" onclick="showPage('apply')" class="btn btn-primary" style="width: 100%; text-align: center;">Jetzt beantragen</a>
+                    </div>
+                </div>
+
+                <!-- Master GLAC -->
+                <div class="membership-card master">
+                    <div class="membership-header">
+                        <h3>Master GLAC</h3>
+                        <p class="membership-slogan">Voller Schutz & Sofortbearbeitung</p>
+                        <div class="membership-price">4000€ <span>/ Woche</span></div>
+                    </div>
+                    <div class="membership-body">
+                        <ul class="membership-features">
+                            <li>40% Rabatt auf alles (außer Teile)</li>
+                            <li>Unbegrenztes Abschleppen</li>
+                            <li>Monatlich Service-Stufe 3 inklusive</li>
+                            <li>RP-VIP-Priorität</li>
+                            <li>Persönlicher Ansprechpartner</li>
+                            <li>Fahrzeugabholung & Rücklieferung</li>
+                            <li>Innen- & Außenreinigung monatlich</li>
+                            <li>VIP-Bereich</li>
+                        </ul>
+                        <a href="#apply" onclick="showPage('apply')" class="btn btn-primary" style="width: 100%; text-align: center;">Jetzt beantragen</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Apply Page -->
+    <div id="apply" class="page hidden">
+        <div class="container" style="margin-top: 100px;">
+            <h2 class="section-title">Mitgliedschaft beantragen</h2>
+            <div id="applySuccess" class="success-message hidden">
+                Vielen Dank für deine Bewerbung! Wir werden uns so schnell wie möglich bei dir melden.
+            </div>
+            <div class="form-container">
+                <form id="applyForm" onsubmit="handleApplySubmit(event)">
+                    <div class="form-group">
+                        <label for="applyIcName">IC-Name *</label>
+                        <input type="text" id="applyIcName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="applyDiscord">Discord-Name *</label>
+                        <input type="text" id="applyDiscord" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="applyPhone">Telefonnummer *</label>
+                        <input type="tel" id="applyPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="applyMembership">Gewünschte Mitgliedschaft *</label>
+                        <select id="applyMembership" required>
+                            <option value="">Bitte wählen</option>
+                            <option value="Basic GLAC - 400€/Woche">Basic GLAC - 400€/Woche</option>
+                            <option value="Standard GLAC - 600€/Woche">Standard GLAC - 600€/Woche</option>
+                            <option value="Pro GLAC - 2000€/Woche">Pro GLAC - 2000€/Woche</option>
+                            <option value="Master GLAC - 4000€/Woche">Master GLAC - 4000€/Woche</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="applyAvailability">Wann bist du ingame? *</label>
+                        <textarea id="applyAvailability" required placeholder="z.B. Mo-Fr 18-22 Uhr, Sa-So ganztags"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Mitgliedschaft beantragen</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Page -->
+    <div id="booking" class="page hidden">
+        <div class="container" style="margin-top: 100px;">
+            <h2 class="section-title">Terminbuchung</h2>
+            <div id="bookingSuccess" class="success-message hidden">
+                Dein Termin wurde erfolgreich gebucht! Wir sehen uns ingame.
+            </div>
+            <div class="form-container">
+                <form id="bookingForm" onsubmit="handleBookingSubmit(event)">
+                    <div class="form-group">
+                        <label for="bookingIcName">IC-Name *</label>
+                        <input type="text" id="bookingIcName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookingDiscord">Discord-Name *</label>
+                        <input type="text" id="bookingDiscord" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookingPhone">Telefonnummer *</label>
+                        <input type="tel" id="bookingPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookingType">Terminart *</label>
+                        <select id="bookingType" required>
+                            <option value="">Bitte wählen</option>
+                            <option value="Service">Service</option>
+                            <option value="Reparatur">Reparatur</option>
+                            <option value="Gespräch / Anliegen">Gespräch / Anliegen</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookingDate">Wunschtermin (Datum) *</label>
+                        <input type="date" id="bookingDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookingTime">Wunschtermin (Uhrzeit) *</label>
+                        <input type="time" id="bookingTime" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookingNotes">Notizen / Anliegen</label>
+                        <textarea id="bookingNotes" placeholder="Beschreibe dein Anliegen oder besondere Wünsche..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Termin buchen</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Login Page -->
+    <div id="admin-login" class="page hidden">
+        <div class="admin-login">
+            <div class="form-container">
+                <h2 class="section-title">Admin-Login</h2>
+                <form id="adminLoginForm" onsubmit="handleAdminLogin(event)">
+                    <div class="form-group">
+                        <label for="adminPassword">Passwort</label>
+                        <input type="password" id="adminPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Einloggen</button>
+                    <p style="margin-top: 1rem; text-align: center; color: #DC2626; font-size: 0.9rem;" id="loginError" class="hidden">Falsches Passwort!</p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard Page -->
+    <div id="admin-dashboard" class="page hidden">
+        <div class="admin-dashboard">
+            <div class="container">
+                <div class="dashboard-header">
+                    <h2>Admin Dashboard</h2>
+                    <button onclick="logout()" class="btn btn-secondary">Ausloggen</button>
+                </div>
+
+                <div class="dashboard-stats">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalBookings">0</div>
+                        <p>Gebuchte Termine</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalApplications">0</div>
+                        <p>Mitgliedschaftsanträge</p>
+                    </div>
+                </div>
+
+                <h3 style="margin-bottom: 1.5rem;">Terminbuchungen</h3>
+                <div class="data-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>IC-Name</th>
+                                <th>Discord</th>
+                                <th>Telefon</th>
+                                <th>Art</th>
+                                <th>Datum</th>
+                                <th>Zeit</th>
+                                <th>Notizen</th>
+                                <th>Status</th>
+                                <th>Aktionen</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bookingsTable">
+                            <tr>
+                                <td colspan="9" style="text-align: center; padding: 2rem; color: #6B7280;">Keine Buchungen vorhanden</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 style="margin: 3rem 0 1.5rem;">Mitgliedschaftsanträge</h3>
+                <div class="data-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>IC-Name</th>
+                                <th>Discord</th>
+                                <th>Telefon</th>
+                                <th>Mitgliedschaft</th>
+                                <th>Verfügbarkeit</th>
+                                <th>Status</th>
+                                <th>Aktionen</th>
+                            </tr>
+                        </thead>
+                        <tbody id="applicationsTable">
+                            <tr>
+                                <td colspan="7" style="text-align: center; padding: 2rem; color: #6B7280;">Keine Anträge vorhanden</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // JSONBIN.IO KONFIGURATION
+        // ============================================
+        // WICHTIG: Trage hier deine JSONBin.io Daten ein!
+        
+        const JSONBIN_CONFIG = {
+            // Dein JSONBin.io API Key (Master Key)
+            // Erstelle einen auf: https://jsonbin.io/api-keys
+            apiKey: '$2a$10$ALw42ny3SwzYz47WcVZtnOcNGEZGha2odbbRpI.fXfGoFeHH8NAUC',
+            
+            // Bin ID für Terminbuchungen
+            // Erstelle ein neues Bin auf: https://jsonbin.io/bins
+            // Initialer Inhalt: {"bookings": []}
+            bookingsBinId: '6949dc8ad0ea881f403a9c63',
+            
+            // Bin ID für Mitgliedschaftsanträge
+            // Erstelle ein weiteres Bin auf: https://jsonbin.io/bins
+            // Initialer Inhalt: {"applications": []}
+            applicationsBinId: '6949dc6ad0ea881f403a9c39'
+        };
+        
+        // ============================================
+        // ENDE DER KONFIGURATION
+        // ============================================
+        
+        // Configuration
+        const ADMIN_PASSWORD = 'glac2024admin'; // Ändern Sie dieses Passwort!
+        const USE_JSONBIN = JSONBIN_CONFIG.apiKey !== 'DEIN_API_KEY_HIER_EINTRAGEN';
+
+        // Data Storage
+        let bookings = [];
+        let applications = [];
+        let isAdminLoggedIn = sessionStorage.getItem('glac_admin_logged_in') === 'true';
+
+        // JSONBin.io Helper Functions
+        async function loadFromJSONBin(binId) {
+            if (!USE_JSONBIN) {
+                console.log('JSONBin nicht konfiguriert, nutze localStorage');
+                return null;
+            }
+            
+            try {
+                const response = await fetch(`https://api.jsonbin.io/v3/b/${binId}/latest`, {
+                    method: 'GET',
+                    headers: {
+                        'X-Master-Key': JSONBIN_CONFIG.apiKey
+                    }
+                });
+                
+                if (!response.ok) throw new Error('Fehler beim Laden');
+                
+                const data = await response.json();
+                return data.record;
+            } catch (error) {
+                console.error('JSONBin Ladefehler:', error);
+                return null;
+            }
+        }
+
+        async function saveToJSONBin(binId, data) {
+            if (!USE_JSONBIN) {
+                console.log('JSONBin nicht konfiguriert, nutze localStorage');
+                return false;
+            }
+            
+            try {
+                const response = await fetch(`https://api.jsonbin.io/v3/b/${binId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Master-Key': JSONBIN_CONFIG.apiKey
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                if (!response.ok) throw new Error('Fehler beim Speichern');
+                return true;
+            } catch (error) {
+                console.error('JSONBin Speicherfehler:', error);
+                return false;
+            }
+        }
+
+        // Initialize Data
+        async function initializeData() {
+            if (USE_JSONBIN) {
+                // Lade Daten von JSONBin
+                const bookingsData = await loadFromJSONBin(JSONBIN_CONFIG.bookingsBinId);
+                const applicationsData = await loadFromJSONBin(JSONBIN_CONFIG.applicationsBinId);
+                
+                bookings = bookingsData?.bookings || [];
+                applications = applicationsData?.applications || [];
+            } else {
+                // Fallback zu localStorage
+                bookings = JSON.parse(localStorage.getItem('glac_bookings') || '[]');
+                applications = JSON.parse(localStorage.getItem('glac_applications') || '[]');
+            }
+        }
+
+        // Save Data
+        async function saveBookings() {
+            if (USE_JSONBIN) {
+                await saveToJSONBin(JSONBIN_CONFIG.bookingsBinId, { bookings });
+            } else {
+                localStorage.setItem('glac_bookings', JSON.stringify(bookings));
+            }
+        }
+
+        async function saveApplications() {
+            if (USE_JSONBIN) {
+                await saveToJSONBin(JSONBIN_CONFIG.applicationsBinId, { applications });
+            } else {
+                localStorage.setItem('glac_applications', JSON.stringify(applications));
+            }
+        }
+
+        // Page Navigation
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => page.classList.add('hidden'));
+            document.getElementById(pageId).classList.remove('hidden');
+            
+            // Close mobile menu
+            document.getElementById('navLinks').classList.remove('active');
+            
+            // Update admin dashboard if shown
+            if (pageId === 'admin-dashboard') {
+                updateAdminDashboard();
+            }
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Handle Apply Form
+        async function handleApplySubmit(event) {
+            event.preventDefault();
+            
+            const application = {
+                id: Date.now(),
+                icName: document.getElementById('applyIcName').value,
+                discord: document.getElementById('applyDiscord').value,
+                phone: document.getElementById('applyPhone').value,
+                membership: document.getElementById('applyMembership').value,
+                availability: document.getElementById('applyAvailability').value,
+                status: 'open',
+                timestamp: new Date().toLocaleString('de-DE')
+            };
+            
+            applications.push(application);
+            await saveApplications();
+            
+            document.getElementById('applyForm').reset();
+            document.getElementById('applySuccess').classList.remove('hidden');
+            
+            setTimeout(() => {
+                document.getElementById('applySuccess').classList.add('hidden');
+            }, 5000);
+        }
+
+        // Handle Booking Form
+        async function handleBookingSubmit(event) {
+            event.preventDefault();
+            
+            const booking = {
+                id: Date.now(),
+                icName: document.getElementById('bookingIcName').value,
+                discord: document.getElementById('bookingDiscord').value,
+                phone: document.getElementById('bookingPhone').value,
+                type: document.getElementById('bookingType').value,
+                date: document.getElementById('bookingDate').value,
+                time: document.getElementById('bookingTime').value,
+                notes: document.getElementById('bookingNotes').value,
+                status: 'open',
+                timestamp: new Date().toLocaleString('de-DE')
+            };
+            
+            bookings.push(booking);
+            await saveBookings();
+            
+            document.getElementById('bookingForm').reset();
+            document.getElementById('bookingSuccess').classList.remove('hidden');
+            
+            setTimeout(() => {
+                document.getElementById('bookingSuccess').classList.add('hidden');
+            }, 5000);
+        }
+
+        // Admin Login
+        function handleAdminLogin(event) {
+            event.preventDefault();
+            
+            const password = document.getElementById('adminPassword').value;
+            
+            if (password === ADMIN_PASSWORD) {
+                sessionStorage.setItem('glac_admin_logged_in', 'true');
+                isAdminLoggedIn = true;
+                showPage('admin-dashboard');
+                document.getElementById('loginError').classList.add('hidden');
+            } else {
+                document.getElementById('loginError').classList.remove('hidden');
+            }
+        }
+
+        // Logout
+        function logout() {
+            sessionStorage.removeItem('glac_admin_logged_in');
+            isAdminLoggedIn = false;
+            showPage('home');
+        }
+
+        // Update Admin Dashboard
+        async function updateAdminDashboard() {
+            if (!isAdminLoggedIn) {
+                showPage('admin-login');
+                return;
+            }
+            
+            // Daten neu laden
+            await initializeData();
+            
+            // Update stats
+            document.getElementById('totalBookings').textContent = bookings.filter(b => b.status === 'open').length;
+            document.getElementById('totalApplications').textContent = applications.filter(a => a.status === 'open').length;
+            
+            // Update bookings table
+            const bookingsTable = document.getElementById('bookingsTable');
+            if (bookings.length === 0) {
+                bookingsTable.innerHTML = '<tr><td colspan="9" style="text-align: center; padding: 2rem; color: #6B7280;">Keine Buchungen vorhanden</td></tr>';
+            } else {
+                bookingsTable.innerHTML = bookings.map(booking => `
+                    <tr>
+                        <td>${booking.icName}</td>
+                        <td>${booking.discord}</td>
+                        <td>${booking.phone}</td>
+                        <td>${booking.type}</td>
+                        <td>${booking.date}</td>
+                        <td>${booking.time}</td>
+                        <td>${booking.notes || '-'}</td>
+                        <td><span class="status-badge ${booking.status === 'open' ? 'status-open' : 'status-done'}">${booking.status === 'open' ? 'Offen' : 'Erledigt'}</span></td>
+                        <td>
+                            ${booking.status === 'open' ? `<button class="action-btn btn-complete" onclick="completeBooking(${booking.id})">Erledigt</button>` : ''}
+                            <button class="action-btn btn-delete" onclick="deleteBooking(${booking.id})">Löschen</button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+            
+            // Update applications table
+            const applicationsTable = document.getElementById('applicationsTable');
+            if (applications.length === 0) {
+                applicationsTable.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 2rem; color: #6B7280;">Keine Anträge vorhanden</td></tr>';
+            } else {
+                applicationsTable.innerHTML = applications.map(app => `
+                    <tr>
+                        <td>${app.icName}</td>
+                        <td>${app.discord}</td>
+                        <td>${app.phone}</td>
+                        <td>${app.membership}</td>
+                        <td>${app.availability}</td>
+                        <td><span class="status-badge ${app.status === 'open' ? 'status-open' : 'status-done'}">${app.status === 'open' ? 'Offen' : 'Erledigt'}</span></td>
+                        <td>
+                            ${app.status === 'open' ? `<button class="action-btn btn-complete" onclick="completeApplication(${app.id})">Erledigt</button>` : ''}
+                            <button class="action-btn btn-delete" onclick="deleteApplication(${app.id})">Löschen</button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+        }
+
+        // Complete Booking
+        async function completeBooking(id) {
+            bookings = bookings.map(b => b.id === id ? {...b, status: 'done'} : b);
+            await saveBookings();
+            updateAdminDashboard();
+        }
+
+        // Delete Booking
+        async function deleteBooking(id) {
+            if (confirm('Möchtest du diese Buchung wirklich löschen?')) {
+                bookings = bookings.filter(b => b.id !== id);
+                await saveBookings();
+                updateAdminDashboard();
+            }
+        }
+
+        // Complete Application
+        async function completeApplication(id) {
+            applications = applications.map(a => a.id === id ? {...a, status: 'done'} : a);
+            await saveApplications();
+            updateAdminDashboard();
+        }
+
+        // Delete Application
+        async function deleteApplication(id) {
+            if (confirm('Möchtest du diesen Antrag wirklich löschen?')) {
+                applications = applications.filter(a => a.id !== id);
+                await saveApplications();
+                updateAdminDashboard();
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', async () => {
+            await initializeData();
+            showPage('home');
+        });
+    </script>
+</body>
+</html>
